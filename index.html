@@ -1501,82 +1501,11 @@
             border-radius: 4px;
         }
 
-        /* ===== RESULTS SHOWCASE ===== */
-        .results-showcase {
-            padding: 100px 24px;
-            position: relative;
-        }
-
-        .results-showcase-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 40px;
-        }
-
-        .showcase-column {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .showcase-title {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-            text-align: center;
-            letter-spacing: -0.01em;
-        }
-
-        .showcase-slideshow {
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-            border: 1px solid rgba(245, 158, 11, 0.15);
-            background: #111827;
-        }
-
-        .slideshow-track {
-            display: flex;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .slideshow-track img {
-            width: 100%;
-            flex-shrink: 0;
-            display: block;
-        }
-
-        .slideshow-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .slideshow-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #374151;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .slideshow-dot.active {
-            background: #f59e0b;
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
-        }
-
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .types-grid,
             .testimonial-videos,
-            .charts-container,
-            .results-showcase-container {
+            .charts-container {
                 grid-template-columns: 1fr;
             }
 
@@ -1773,55 +1702,6 @@
                 <div class="testimonial-video reveal-right delay-2">
                     <wistia-player media-id="qozw807pnq" aspect="1.7777777777777777"></wistia-player>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== RESULTS SHOWCASE ===== -->
-    <section class="results-showcase">
-        <div class="results-showcase-container">
-            <div class="showcase-column">
-                <h3 class="showcase-title">Real Campaign Results</h3>
-                <div class="showcase-slideshow" data-slideshow>
-                    <div class="slideshow-track">
-                        <img src="Campaigns/1.webp" alt="Campaign result">
-                        <img src="Campaigns/2.webp" alt="Campaign result">
-                        <img src="Campaigns/3.webp" alt="Campaign result">
-                        <img src="Campaigns/4.webp" alt="Campaign result">
-                        <img src="Campaigns/5.webp" alt="Campaign result">
-                        <img src="Campaigns/6.webp" alt="Campaign result">
-                        <img src="Campaigns/7.webp" alt="Campaign result">
-                        <img src="Campaigns/8.webp" alt="Campaign result">
-                        <img src="Campaigns/9.webp" alt="Campaign result">
-                        <img src="Campaigns/10.webp" alt="Campaign result">
-                        <img src="Campaigns/11.webp" alt="Campaign result">
-                        <img src="Campaigns/12.webp" alt="Campaign result">
-                        <img src="Campaigns/13.png" alt="Campaign result">
-                        <img src="Campaigns/14.png" alt="Campaign result">
-                        <img src="Campaigns/15.png" alt="Campaign result">
-                        <img src="Campaigns/16.png" alt="Campaign result">
-                        <img src="Campaigns/17.png" alt="Campaign result">
-                        <img src="Campaigns/18.png" alt="Campaign result">
-                    </div>
-                </div>
-                <div class="slideshow-dots" data-dots></div>
-            </div>
-
-            <div class="showcase-column">
-                <h3 class="showcase-title">What Our Partners Are Saying</h3>
-                <div class="showcase-slideshow" data-slideshow>
-                    <div class="slideshow-track">
-                        <img src="Client-texts/1.png" alt="Client message">
-                        <img src="Client-texts/2.png" alt="Client message">
-                        <img src="Client-texts/3.png" alt="Client message">
-                        <img src="Client-texts/4.png" alt="Client message">
-                        <img src="Client-texts/5.png" alt="Client message">
-                        <img src="Client-texts/6.png" alt="Client message">
-                        <img src="Client-texts/7.png" alt="Client message">
-                        <img src="Client-texts/8.png" alt="Client message">
-                    </div>
-                </div>
-                <div class="slideshow-dots" data-dots></div>
             </div>
         </div>
     </section>
@@ -2291,58 +2171,6 @@
                 observer.observe(el);
             });
 
-            // Slideshows
-            document.querySelectorAll('.showcase-column').forEach(function(column) {
-                var slideshow = column.querySelector('[data-slideshow]');
-                var dotsContainer = column.querySelector('[data-dots]');
-                var track = slideshow.querySelector('.slideshow-track');
-                var images = track.querySelectorAll('img');
-                var count = images.length;
-                var current = 0;
-                var interval;
-
-                // Create dots
-                for (var i = 0; i < count; i++) {
-                    var dot = document.createElement('button');
-                    dot.className = 'slideshow-dot' + (i === 0 ? ' active' : '');
-                    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-                    (function(index) {
-                        dot.addEventListener('click', function() {
-                            goTo(index);
-                            resetInterval();
-                        });
-                    })(i);
-                    dotsContainer.appendChild(dot);
-                }
-
-                function goTo(index) {
-                    current = index;
-                    track.style.transform = 'translateX(-' + (current * 100) + '%)';
-                    var dots = dotsContainer.querySelectorAll('.slideshow-dot');
-                    dots.forEach(function(d, i) {
-                        d.classList.toggle('active', i === current);
-                    });
-                }
-
-                function next() {
-                    goTo((current + 1) % count);
-                }
-
-                function resetInterval() {
-                    clearInterval(interval);
-                    interval = setInterval(next, 2000);
-                }
-
-                // Pause on hover
-                slideshow.addEventListener('mouseenter', function() {
-                    clearInterval(interval);
-                });
-                slideshow.addEventListener('mouseleave', function() {
-                    resetInterval();
-                });
-
-                resetInterval();
-            });
         });
     </script>
 </body>
